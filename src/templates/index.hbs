@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ htmlWebpackPlugin.options.manifestConfig.name }}</title>
+    <meta name="description" content="{{ htmlWebpackPlugin.options.manifestConfig.description }}">
+    <meta name="theme-color" content="{{ htmlWebpackPlugin.options.manifestConfig.theme_color }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/favicon.ico">
+    <link rel="icon" type="image/ico" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png">
+    <link rel="shortcut icon" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png">
+    <link rel="manifest" href="{{ htmlWebpackPlugin.options.assetPath }}data/manifest.json">
+
+    <!-- Add iOS meta tags and icons -->
+    <!-- Similar to manifest for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="apple-touch-startup-image" sizes="2048x2732" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="1668x2224" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="1536x2048" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="1125x2436" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="1242x2208" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="750x1334" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" sizes="640x1136" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-startup-image" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png" />
+    <link rel="apple-touch-icon-precomposed" href="{{ htmlWebpackPlugin.options.assetPath }}assets/img/logo.png">
+
+    <meta name="apple-mobile-web-app-title" content="{{ htmlWebpackPlugin.options.manifestConfig.name }}">
+
+    {{#each htmlWebpackPlugin.options.manifestConfig.icons}}
+        <link rel="apple-touch-icon" sizes="{{ this.sizes }}" href="{{ htmlWebpackPlugin.options.assetPath }}{{ this.src }}">
+    {{/each}}
+
+    {{#each htmlWebpackPlugin.options.manifestConfig.icons}}
+        <link rel="apple-touch-icon-precomposed" sizes="{{ this.sizes }}" href="{{ htmlWebpackPlugin.options.assetPath }}{{ this.src }}">
+    {{/each}}
+</head>
+
+<body>
+    <noscript>This app uses scripts. Please allowed scripts to get this app working.</noscript>
+
+    <div id="page-headline">
+        <h1>{{ htmlWebpackPlugin.options.manifestConfig.description }}</h1>
+    </div>
+    <simple-todo></simple-todo>
+    <a2hs></a2hs>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+﻿/* Font Awesome 4.7 läuft über die Creative Commones Lizensen und ist für private als auch kommmenzielle Zwecke, auch ohne Angabe, frei zu nutzen. */
+@import "font-awesome";
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-ExtraBoldItalic.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-BoldItalic.woff') format('woff');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/nunito/Nunito-ExtraLightItalic.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+}

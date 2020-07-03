@@ -1,0 +1,42 @@
+@import 'imports';
+
+$primary-color: var(--todoPrimeColor);
+$primary-color-lighten: var(--todoPrimeColorLighten);
+$primary-color-darken: var(--todoPrimeColorDarken);
+$secondary-color: var(--todoSecondColor);
+$white: var(--todoWhite);
+$black: var(--todoBlack);
+$darkgray: var(--todoDarkGray);
+$gray: var(--todoGray);
+$success: var(--todoSuccess);
+$alert: var(--todoAlert);
+$goldenlineargradient: var(--todoGoldLinearGradient);
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    --todoPrimeColor: #D4AF37;
+    --todoPrimeColorLighten: #E0CA36;
+    --todoPrimeColorDarken: #544616;
+    --todoSecondColor: #60157e;
+    --todoWhite: #ffffff;
+    --todoBlack: #000000;
+    --todoDarkGray: #121212;
+    --todoGray: #5E5E5E;
+    --todoSuccess: #3adb76;
+    --todoAlert: #cc4b37;
+    --todoGoldLinearGradient: linear-gradient(145deg, #AE8625, #F7EF8A, #D2AC47, #EDC967);
+    margin: 0;
+    background-color: $darkgray;
+}
+
+#page-headline {
+    h1 {
+        text-align: center;
+        font-family: "Nunito", sans-serif;
+        font-weight: bold;
+        color: $primary-color;
+    }
+}
