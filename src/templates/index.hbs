@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-        content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ htmlWebpackPlugin.options.manifestConfig.name }}</title>
     <meta name="description" content="{{ htmlWebpackPlugin.options.manifestConfig.description }}">
@@ -43,9 +43,6 @@
 <body>
     <noscript>This app uses scripts. Please allowed scripts to get this app working.</noscript>
 
-    <div id="page-headline">
-        <h1>{{ htmlWebpackPlugin.options.manifestConfig.description }}</h1>
-    </div>
     <simple-todo></simple-todo>
     <a2hs></a2hs>
 
