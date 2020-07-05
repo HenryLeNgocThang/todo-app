@@ -192,7 +192,6 @@
         display: block;
         margin: 0 auto;
         padding: 20px;
-        max-width: $appMaxWidth;
         font-family: 'Nunito', sans-serif;
 
         h1 {
@@ -235,6 +234,8 @@
                 border-radius: 0px;
                 background: $white;
                 box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
 
                 &:active,
                 &:focus {
@@ -242,7 +243,7 @@
                         padding-left: 40px;
 
                         &:before {
-                            color: $black;
+                            opacity: 1;
                         }
                     }
                 }
@@ -266,6 +267,8 @@
                 font-weight: bold;
                 position: relative;
                 overflow: hidden;
+                border-top-right-radius: 2px;
+                border-bottom-right-radius: 2px;
 
                 &:before {
                     position: absolute;
@@ -274,7 +277,8 @@
                     font-family: FontAwesome;
                     content: "\f067";
                     font-size: 21px;
-                    color: $primary-color;
+                    opacity: 0;
+                    color: $darkgray;
                     transition: .3s ease-in-out all;
                 }
 
@@ -313,7 +317,7 @@
             }
 
             .swipeout-content {
-                background: $goldenlineargradient;
+                background: $primary-color;
 
                 i {
                     color: $white;
@@ -426,6 +430,7 @@
                     margin: 5px 0;
                     height: auto;
                     min-height: 70px;
+                    border-radius: 2px;
                     animation: rotateListItem 1s ease-in-out 1;
                 }
 

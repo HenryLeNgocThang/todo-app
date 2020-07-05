@@ -67,6 +67,7 @@
         position: fixed;
         top: 5%;
         right: 5%;
+        z-index: 100;
         display: block;
         animation: a2hs 1s ease-in-out 1;
         width: auto;
