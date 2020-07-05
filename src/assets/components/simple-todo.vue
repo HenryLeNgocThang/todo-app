@@ -1,12 +1,11 @@
 <template>
     <div id="simple-todo-wrap">
         <h1>{{todoHeadline}}</h1>
-        <form v-on:submit.prevent="addTodo">
-            <label for="todo-input">Enter your new entry:</label>
-            <input v-model="newTodo" type="text" id="todo-input" placeholder="New entry">
+        <form class="addTodoForm" v-on:submit.prevent="addTodo">
+            <label for="todo-input">Gebe einen neuen Eintrag ein:</label>
+            <input v-model="newTodo" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
             <button type="submit"> Add</button>
         </form>
-        <p id="todo-error-message" v-if="errorMessage">{{errorMessage}}</p>
         <h3>Todos:</h3>
         <div class="list" id="todos-list">
             <swipe-list ref="list" class="card swipeout-non-selectable" :disabled="!enabled" :items="todos"
@@ -21,11 +20,14 @@
                 </template>
                 <template v-slot="{ item }">
                     <div class="card-content">
-                        <input type="text" v-bind:value="item.text" readonly="readonly">
+                        <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
+                            <input type="text" :value="item.text" placeholder="Bitte ausfüllen" readonly required>
+                            <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                        </form>
                     </div>
                 </template>
                 <template v-slot:right="{ item, close, index }">
-                    <div class="swipeout-action edit" v-on:click="edit">
+                    <div class="swipeout-action edit" v-on:click="edit($event), close()">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </div>
                     <div class="swipeout-action delete" title="remove" v-on:click="remove(item, index, 1)">
@@ -48,11 +50,14 @@
                 </template>
                 <template v-slot="{ item }">
                     <div class="card-content">
-                        <input type="text" v-bind:value="item.text" readonly="readonly">
+                        <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
+                            <input type="text" :value="item.text" readonly>
+                            <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                        </form>
                     </div>
                 </template>
                 <template v-slot:right="{ item, close, index }">
-                    <div class="swipeout-action edit" v-on:click="edit">
+                    <div class="swipeout-action edit" v-on:click="edit($event), close()">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </div>
                     <div class="swipeout-action delete" title="remove" v-on:click="remove(item, index, 1)">
@@ -81,7 +86,6 @@
                 todoHeadline: "Simple Todo App",
                 enabled: true,
                 newTodo: "",
-                errorMessage: "",
                 todos: localStorage.getItem('simple-todos') != null ? [...JSON.parse(localStorage.getItem(
                     'simple-todos'))] : [],
                 dones: localStorage.getItem('simple-dones') != null ? [...JSON.parse(localStorage.getItem(
@@ -89,7 +93,7 @@
             }
         },
         methods: {
-            addTodo: function (e) {
+            addTodo(e) {
                 if (this.newTodo && this.newTodo !== "") {
                     this.todos.push({
                         state: false,
@@ -99,17 +103,9 @@
                     this.updateStorage();
 
                     this.newTodo = "";
-                } else {
-                    if (this.errorMessage == "") {
-                        this.errorMessage = 'Please make sure that the input is not empty!';
-
-                        setTimeout(() => {
-                            this.errorMessage = "";
-                        }, 5000);
-                    }
                 }
             },
-            switchList: function (index, type) {
+            switchList(index, type) {
                 if (!type.state) {
                     this.dones.push(this.todos.splice(index, 1)[0]);
                 } else {
@@ -119,7 +115,7 @@
                 type.state = !type.state;
                 this.updateStorage();
             },
-            remove: function (type, index, amount) {
+            remove(type, index, amount) {
                 if (!type.state) {
                     this.todos.splice(index, amount);
                     this.updateStorage();
@@ -128,7 +124,7 @@
                     this.updateStorage();
                 }
             },
-            clone: function (type) {
+            clone(type) {
                 if (!type.state) {
                     this.todos.push({
                         state: type.state,
@@ -143,13 +139,25 @@
 
                 this.updateStorage();
             },
-            edit: function(e) {
-                if (e.toElement.parentElement.parentElement.getElementsByTagName("input")[0].readOnly) {
-                    let input = e.toElement.parentElement.parentElement.getElementsByTagName("input")[0];
+            edit(e) {
+                let listItemInput = e.toElement.parentElement.parentElement.getElementsByTagName("input")[0];
+
+                if (listItemInput.readOnly) {
+                    let input = listItemInput;
                     input.readOnly = false;
+                    input.focus();
+                } else {
+                    let input = listItemInput;
+                    input.readOnly = true;
                 }
             },
-            updateStorage: function () {
+            save(e, item) {
+                let listItemInput = e.target.querySelector("input");
+
+                item.text = listItemInput.value;
+                listItemInput.readOnly = true;
+            },
+            updateStorage() {
                 localStorage.setItem('simple-todos', JSON.stringify(this.todos));
                 localStorage.setItem('simple-dones', JSON.stringify(this.dones));
             },
@@ -174,8 +182,6 @@
 
 <style lang="scss">
     @import '~scss/style';
-
-    $appMaxWidth: 480px;
 
     // 480     Pixel
     // 768     Pixel
@@ -203,12 +209,7 @@
             font-size: 21px;
         }
 
-        p#todo-error-message {
-            color: #f00;
-            animation: todoErrorMessage 1s ease-in-out 1;
-        }
-
-        form {
+        form.addTodoForm {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -321,6 +322,27 @@
                 input {
                     color: $darkgray;
                     font-weight: bold;
+
+                    &[readonly] {
+                        background: transparent;
+                        border: 0;
+                        outline: 0;
+
+                        ~ button[type="submit"] {
+                            display: none;
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+                    }
+                }
+
+                
+                form.todo-list-item-form {
+                    button {
+                        i {
+                            color: $darkgray;
+                        }
+                    }
                 }
             }
         }
@@ -345,14 +367,31 @@
             .swipeout-content {
                 background: $gray;
 
-                i {
+                input {
                     color: $darkgray;
+                    font-weight: bold;
+
+                    &[readonly] {
+                        background: transparent;
+                        text-decoration: line-through;
+                        border: 0;
+                        outline: 0;
+                        color: $white;
+
+                        ~ button[type="submit"] {
+                            display: none;
+                            opacity: 0;
+                            visibility: hidden;
+                        }
+                    }
                 }
 
-                input {
-                    text-decoration: line-through;
-                    color: $white;
-                    font-weight: bold;
+                form.todo-list-item-form {
+                    button {
+                        i {
+                            color: $white;
+                        }
+                    }
                 }
             }
         }
@@ -441,13 +480,27 @@
                         width: 100%;
                         display: flex;
                         align-items: center;
-                        padding: 0 20px;
+                        padding-left: 20px;
 
-                        input {
-                            &[readonly="readonly"] {
+                        > div {
+                            width: 100%;
+                        }
+
+                        form.todo-list-item-form {
+                            display: flex;
+
+                            button {
+                                font-size: 30px;
+                                padding: 0;
+                                margin: 0;
                                 background: transparent;
                                 border: 0;
                                 outline: 0;
+                                width: 15%;
+                            }
+
+                            input {
+                                width: 85%;
                             }
                         }
                     }
@@ -473,16 +526,6 @@
 
         100% {
             transform: rotateX(0deg);
-        }
-    }
-
-    @keyframes todoErrorMessage {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
         }
     }
 </style>

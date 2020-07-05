@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import SimpleTodo from '../components/simple-todo.vue';
+import Paging from '../components/paging.vue';
 import A2hs from '../components/a2hs-button.vue';
 
 if ('serviceWorker' in navigator) {
@@ -12,9 +12,9 @@ if ('serviceWorker' in navigator) {
     });
 };
 
-const simpleTodoApp = new Vue({
-    render: (h) => h(SimpleTodo)
-}).$mount('simple-todo');
+const pagingApp = new Vue({
+    render: (h) => h(Paging)
+}).$mount('paging');
 
 const a2hsApp = new Vue({
     render: (h) => h(A2hs)

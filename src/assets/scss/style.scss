@@ -12,6 +12,8 @@ $success: var(--todoSuccess);
 $alert: var(--todoAlert);
 $goldenlineargradient: var(--todoGoldLinearGradient);
 
+$appMaxWidth: 480px;
+
 * {
     box-sizing: border-box;
 }
