@@ -1,11 +1,5 @@
 <template>
     <div id="simple-todo-wrap">
-        <h1>{{todoHeadline}}</h1>
-        <form class="addTodoForm" v-on:submit.prevent="addTodo">
-            <label for="todo-input">Gebe einen neuen Eintrag ein:</label>
-            <input v-model="newTodo" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
-            <button type="submit"> Add</button>
-        </form>
         <h3>Todos:</h3>
         <div class="list" id="todos-list">
             <swipe-list ref="list" class="card swipeout-non-selectable" :disabled="!enabled" :items="todos"
@@ -81,30 +75,33 @@
             SwipeOut,
             SwipeList
         },
+        props: {
+            addTodo: {
+                type: String
+            }
+        },
         data() {
             return {
-                todoHeadline: "Simple Todo App",
                 enabled: true,
-                newTodo: "",
                 todos: localStorage.getItem('simple-todos') != null ? [...JSON.parse(localStorage.getItem(
                     'simple-todos'))] : [],
                 dones: localStorage.getItem('simple-dones') != null ? [...JSON.parse(localStorage.getItem(
                     'simple-dones'))] : []
             }
         },
-        methods: {
-            addTodo(e) {
-                if (this.newTodo && this.newTodo !== "") {
+        watch: {
+            addTodo() {
+                if (this.addTodo && this.addTodo !== "") {
                     this.todos.push({
                         state: false,
-                        text: this.newTodo
+                        text: this.addTodo
                     });
 
                     this.updateStorage();
-
-                    this.newTodo = "";
                 }
             },
+        },
+        methods: {
             switchList(index, type) {
                 if (!type.state) {
                     this.dones.push(this.todos.splice(index, 1)[0]);
@@ -324,15 +321,12 @@
                 }
 
                 input {
-                    color: $darkgray;
-                    font-weight: bold;
-
                     &[readonly] {
                         background: transparent;
                         border: none;
                         outline: none;
 
-                        ~ button[type="submit"] {
+                        ~button[type="submit"] {
                             display: none;
                             opacity: 0;
                             visibility: hidden;
@@ -340,7 +334,7 @@
                     }
                 }
 
-                
+
                 form.todo-list-item-form {
                     button {
                         i {
@@ -372,9 +366,6 @@
                 background: $gray;
 
                 input {
-                    color: $darkgray;
-                    font-weight: bold;
-
                     &[readonly] {
                         background: transparent;
                         text-decoration: line-through;
@@ -382,7 +373,7 @@
                         outline: none;
                         color: $white;
 
-                        ~ button[type="submit"] {
+                        ~button[type="submit"] {
                             display: none;
                             opacity: 0;
                             visibility: hidden;
@@ -468,6 +459,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            cursor: pointer;
 
                             i {
                                 font-size: 30px;
@@ -486,8 +478,22 @@
                         display: flex;
                         align-items: center;
                         padding-left: 20px;
+                        cursor: grab;
 
-                        > div {
+                        &:active {
+                            cursor: grabbing;
+                        }
+
+                        input {
+                            font-size: 18px;
+                            color: $darkgray;
+
+                            &[readonly] {
+                                cursor: unset;
+                            }
+                        }
+
+                        >div {
                             width: 100%;
                         }
 

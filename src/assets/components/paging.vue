@@ -3,10 +3,10 @@
         <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 <li class="glide__slide">
-                    <simple-todo></simple-todo>
+                    <simple-todo :addTodo="formData" />
                 </li>
                 <li class="glide__slide">
-                    <h2>Hello, World!</h2>
+                    <todoForm v-on:inputData="updateTodo" />
                 </li>
                 <li class="glide__slide">
                     <h2>Test</h2>
@@ -34,15 +34,19 @@
         Controls
     } from '@glidejs/glide/dist/glide.modular.esm'
     import simpleTodo from './simple-todo.vue'
+    import todoForm from './todo-form.vue'
 
     let glide;
 
     export default {
         components: {
-            simpleTodo
+            simpleTodo,
+            todoForm
         },
         data() {
-            return {}
+            return {
+                formData: ""
+            }
         },
         mounted() {
             glide = new Glide('#todo-main', {
@@ -54,8 +58,11 @@
                 Controls
             });
         },
-        watch: {},
-        methods: {},
+        methods: {
+            updateTodo(payload) {
+                this.formData = payload;
+            }
+        },
     }
 </script>
 
@@ -95,6 +102,7 @@
                     font-size: 21px;
                     position: relative;
                     color: $primary-color;
+                    cursor: pointer;
                     transition: all .3s ease-in-out;
 
                     &:after {
