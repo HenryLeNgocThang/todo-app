@@ -77,7 +77,7 @@
         },
         props: {
             addTodo: {
-                type: String
+                type: Object
             }
         },
         data() {
@@ -91,10 +91,10 @@
         },
         watch: {
             addTodo() {
-                if (this.addTodo && this.addTodo !== "") {
+                if (this.addTodo && this.addTodo !== null && this.addTodo !== "undefined") {
                     this.todos.push({
                         state: false,
-                        text: this.addTodo
+                        text: this.addTodo.text
                     });
 
                     this.updateStorage();
@@ -180,122 +180,7 @@
 <style lang="scss">
     @import '~scss/style';
 
-    // 480     Pixel
-    // 768     Pixel
-    // 1024    Pixel
-
     #simple-todo-wrap {
-        width: 100%;
-        display: block;
-        margin: 0 auto;
-        padding: 20px;
-        font-family: 'Nunito', sans-serif;
-
-        h1 {
-            text-align: center;
-            font-family: "Nunito", sans-serif;
-            font-weight: bold;
-            color: $primary-color;
-            font-size: 40px;
-            margin-top: 20px;
-        }
-
-        h3 {
-            color: $primary-color;
-            font-size: 21px;
-        }
-
-        form.addTodoForm {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-
-            label {
-                flex: 1 1 100%;
-                color: $primary-color;
-                font-size: 21px;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
-
-            input {
-                width: 100%;
-                flex: 1 1 65%;
-                color: $darkgray;
-                border: none;
-                outline: none;
-                padding: 15px;
-                font-size: 21px;
-                border-radius: 0px;
-                background: $white;
-                box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-                border-top-left-radius: 2px;
-                border-bottom-left-radius: 2px;
-
-                &:active,
-                &:focus {
-                    ~button {
-                        padding-left: 40px;
-
-                        &:before {
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-
-            button {
-                width: 100%;
-                flex: 1 1 25%;
-                text-transform: uppercase;
-                border: none;
-                outline: none;
-                transition: all .3s ease-in;
-                cursor: pointer;
-                color: $darkgray;
-                background: $goldenlineargradient;
-                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
-                border-radius: 0px;
-                padding: 15px;
-                opacity: 1;
-                font-size: 21px;
-                font-weight: bold;
-                position: relative;
-                overflow: hidden;
-                border-top-right-radius: 2px;
-                border-bottom-right-radius: 2px;
-
-                &:before {
-                    position: absolute;
-                    top: 50%;
-                    transform: translate(-30px, -50%);
-                    font-family: FontAwesome;
-                    content: "\f067";
-                    font-size: 21px;
-                    opacity: 0;
-                    color: $darkgray;
-                    transition: .3s ease-in-out all;
-                }
-
-                &.focus,
-                &.active,
-                &:hover {
-                    border: none;
-                    padding-left: 40px;
-
-                    &:before {
-                        color: $black;
-                    }
-                }
-
-                &:focus {
-                    outline: none;
-                }
-            }
-        }
-
         .list#todos-list {
             .swipeout-list-item {
                 background: $black;

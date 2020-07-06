@@ -9,7 +9,7 @@
                     <todoForm v-on:inputData="updateTodo" />
                 </li>
                 <li class="glide__slide">
-                    <h2>Test</h2>
+                    <h2>Einstellungen</h2>
                 </li>
             </ul>
         </div>
@@ -19,7 +19,7 @@
                     <i class="fa fa-list-ul" aria-hidden="true"></i>
                 </button>
                 <button class="glide__bullet glide-kalender" data-glide-dir="=1">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
                 </button>
                 <button class="glide__bullet glide-settings" data-glide-dir="=2">
                     <i class="fa fa-cog" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
         },
         data() {
             return {
-                formData: ""
+                formData: {}
             }
         },
         mounted() {
@@ -77,6 +77,29 @@
         margin: 0 auto;
         padding-bottom: $navheight;
         min-height: 100vh;
+        
+        h1 {
+            text-align: center;
+            font-family: "Nunito", sans-serif;
+            font-weight: bold;
+            color: $primary-color;
+            font-size: 40px;
+            margin-top: 20px;
+        }
+
+        h3 {
+            color: $primary-color;
+            font-size: 21px;
+        }
+
+        #todo-form-wrap,
+        #simple-todo-wrap {
+            width: 100%;
+            display: block;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Nunito', sans-serif;
+        }
 
         .bullet-wrap {
             width: 100%;
