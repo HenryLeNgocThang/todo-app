@@ -227,8 +227,8 @@
                 width: 100%;
                 flex: 1 1 65%;
                 color: $darkgray;
-                border: 0;
-                outline: 0;
+                border: none;
+                outline: none;
                 padding: 15px;
                 font-size: 21px;
                 border-radius: 0px;
@@ -253,12 +253,12 @@
                 width: 100%;
                 flex: 1 1 25%;
                 text-transform: uppercase;
-                border: 0;
-                outline: 0;
+                border: none;
+                outline: none;
                 transition: all .3s ease-in;
                 cursor: pointer;
                 color: $darkgray;
-                background: $primary-color;
+                background: $goldenlineargradient;
                 box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
                 border-radius: 0px;
                 padding: 15px;
@@ -285,7 +285,7 @@
                 &.focus,
                 &.active,
                 &:hover {
-                    border: 0;
+                    border: none;
                     padding-left: 40px;
 
                     &:before {
@@ -294,7 +294,7 @@
                 }
 
                 &:focus {
-                    outline: 0;
+                    outline: none;
                 }
             }
         }
@@ -317,7 +317,7 @@
             }
 
             .swipeout-content {
-                background: $primary-color;
+                background: $goldenlineargradient;
 
                 i {
                     color: $white;
@@ -329,8 +329,8 @@
 
                     &[readonly] {
                         background: transparent;
-                        border: 0;
-                        outline: 0;
+                        border: none;
+                        outline: none;
 
                         ~ button[type="submit"] {
                             display: none;
@@ -378,8 +378,8 @@
                     &[readonly] {
                         background: transparent;
                         text-decoration: line-through;
-                        border: 0;
-                        outline: 0;
+                        border: none;
+                        outline: none;
                         color: $white;
 
                         ~ button[type="submit"] {
@@ -499,8 +499,8 @@
                                 padding: 0;
                                 margin: 0;
                                 background: transparent;
-                                border: 0;
-                                outline: 0;
+                                border: none;
+                                outline: none;
                                 width: 15%;
                             }
 

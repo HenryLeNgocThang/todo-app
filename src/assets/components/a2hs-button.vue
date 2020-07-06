@@ -72,8 +72,8 @@
         animation: a2hs 1s ease-in-out 1;
         width: auto;
         height: auto;
-        border: 0;
-        outline: 0;
+        border: none;
+        outline: none;
         transition: all .3s ease-in;
         cursor: pointer;
         background: $primary-color;

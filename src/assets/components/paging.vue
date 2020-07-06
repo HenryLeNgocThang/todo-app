@@ -16,13 +16,13 @@
         <div class="bullet-wrap">
             <div class="glide__bullets" data-glide-el="controls[nav]">
                 <button class="glide__bullet glide-todo-list" data-glide-dir="=0">
-                    <p>todo-list</p>
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>
                 </button>
                 <button class="glide__bullet glide-kalender" data-glide-dir="=1">
-                    <p>kalender</p>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
                 </button>
                 <button class="glide__bullet glide-settings" data-glide-dir="=2">
-                    <p>settings</p>
+                    <i class="fa fa-cog" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
@@ -62,14 +62,14 @@
 <style lang="scss">
     @import '~scss/style';
 
-    $navheight: 70px;
+    $navheight: 85px;
 
     #todo-main {
         width: 100%;
         max-width: $appMaxWidth;
         margin: 0 auto;
         padding-bottom: $navheight;
-        min-height: calc(100vh - #{$navheight});
+        min-height: 100vh;
 
         .bullet-wrap {
             width: 100%;
@@ -83,66 +83,44 @@
 
                 button.glide__bullet {
                     display: block;
+                    width: 100%;
                     flex: 1;
                     height: $navheight;
+                    padding-bottom: calc(#{$navheight} / 4);
                     border-radius: 0;
-                    outline: 0px;
-                    border: 0px;
-                    background: $white;
+                    outline: none;
+                    border: none;
+                    background: #121212de;
+                    backdrop-filter: blur(15px);
                     font-size: 21px;
                     position: relative;
+                    color: $primary-color;
                     transition: all .3s ease-in-out;
 
-                    p {
-                        margin: 0;
-                        display: inline-block;
+                    &:after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -73%);
+                        width: 10px;
+                        height: 10px;
                         opacity: 0;
-                        padding-left: 30px;
-                        transform: translateY(-50%);
-                        transition: all .2s ease-in-out;
+                        border-radius: 50%;
+                        border: 2px solid $primary-color;
+                        transition: all .3s ease-in-out;
                     }
 
-                    &:before {
-                        font-family: FontAwesome;
-                        position: absolute;
-                        left: 50%;
-                        top: 50%;
-                        transform: translate(-50%, -50%);
-                        transition: all .2s .2s ease-in-out;
-                    }
 
                     &.glide__bullet--active {
-                        &:before {
-                            left: 20%;
-                            transition: all .2s ease-in-out;
-                        }
-
-                        p {
+                        &:after {
+                            width: 40px;
+                            height: 40px;
                             opacity: 1;
-                            transform: translateY(0);
-                            transition: all .2s .2s ease-in-out;
                         }
                     }
                 }
-
-                .glide-todo-list {
-                    &:before {
-                        content: "\f0ca";
-                    }
-                }
-
-                .glide-kalender {
-                    &:before {
-                        content: "\f073";
-                    }
-                }
-
-                .glide-settings {
-                    &:before {
-                        content: "\f013";
-                    }
-                }
-
             }
         }
     }
