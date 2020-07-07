@@ -4,7 +4,7 @@
         <form class="addTodoForm" v-on:submit.prevent="emittingTodo">
             <div class="flex-wrap">
                 <div class="flex-2">
-                    <label for="todo-priority">Gebe die Priorität an:</label>
+                    <label for="todo-priority">Priorität:</label>
                     <select v-model="newTodo.priority" id="todo-priority" required>
                         <option value="Hoch">Hoch</option>
                         <option value="Normal">Normal</option>
@@ -12,11 +12,11 @@
                     </select>
                 </div>
                 <div class="flex-2">
-                    <label for="todo-calendar">Gebe die Frist ein:</label>
+                    <label for="todo-calendar">Frist:</label>
                     <input v-model="newTodo.date" id="todo-calendar" type="date" required>
                 </div>
                 <div class="flex-1">
-                    <label for="todo-input">Gebe einen neuen Eintrag ein:</label>
+                    <label for="todo-input">Neuer Eintrag:</label>
                     <div class="flex-wrap">
                         <input v-model="newTodo.text" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
                         <button type="submit"> Add</button>

@@ -1,5 +1,14 @@
 <template>
     <div id="simple-todo-wrap">
+        <h3>Filtern nach:</h3>
+        <form>
+            <select v-on:change="sortArray($event)">
+                <option selected>Bitte wählen</option>
+                <option value="text">Alphabetisch</option>
+                <option value="date">Frist</option>
+                <option value="priority">Priorität</option>
+            </select>
+        </form>
         <h3>Todos:</h3>
         <div class="list" id="todos-list">
             <swipe-list ref="list" class="card swipeout-non-selectable" :disabled="!enabled" :items="todos"
@@ -126,6 +135,28 @@
             },
         },
         methods: {
+            sortArray(e) {
+                function compare(a, b) {
+                    if (a.hasOwnProperty(e.srcElement.value) && b.hasOwnProperty(e.srcElement.value)) {
+                        const bandA = a[e.srcElement.value].toUpperCase();
+                        const bandB = b[e.srcElement.value].toUpperCase();
+                        let comparison = 0;
+
+                        if (bandA > bandB) {
+                            comparison = 1;
+                        } else if (bandA < bandB) {
+                            comparison = -1;
+                        }
+
+                        return comparison;
+                    } else {
+                        return null;
+                    }
+                }
+
+                this.todos.sort(compare);
+                this.dones.sort(compare);
+            },
             switchList(index, type) {
                 if (!type.state) {
                     this.dones.push(this.todos.splice(index, 1)[0]);
@@ -287,8 +318,13 @@
                     input,
                     select {
                         &[disabled] {
-                            text-decoration: line-through;
                             color: $white;
+                        }
+                    }
+
+                    input[type="text"] {
+                        &[disabled] {
+                            text-decoration: line-through;
                         }
                     }
                 }
