@@ -92,10 +92,8 @@
         watch: {
             addTodo() {
                 if (this.addTodo && this.addTodo !== null && this.addTodo !== "undefined") {
-                    this.todos.push({
-                        state: false,
-                        text: this.addTodo.text
-                    });
+                    this.addTodo["state"] = false;
+                    this.todos.push(this.addTodo);
 
                     this.updateStorage();
                 }
@@ -125,12 +123,16 @@
                 if (!type.state) {
                     this.todos.push({
                         state: type.state,
-                        text: type.text
+                        text: type.text,
+                        priority: type.priority,
+                        date: type.date
                     });
                 } else {
                     this.dones.push({
                         state: type.state,
-                        text: type.text
+                        text: type.text,
+                        priority: type.priority,
+                        date: type.date
                     });
                 }
 

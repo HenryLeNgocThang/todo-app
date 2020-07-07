@@ -5,15 +5,15 @@
             <div class="flex-wrap">
                 <div class="flex-2">
                     <label for="todo-priority">Gebe die Priorität an:</label>
-                    <select id="todo-priority" required>
+                    <select v-model="newTodo.priority" id="todo-priority" required>
                         <option value="Hoch">Hoch</option>
-                        <option value="Normal" selected>Normal</option>
+                        <option value="Normal">Normal</option>
                         <option value="Gering">Gering</option>
                     </select>
                 </div>
                 <div class="flex-2">
                     <label for="todo-calendar">Gebe die Frist ein:</label>
-                    <input id="todo-calendar" type="date" required>
+                    <input v-model="newTodo.date" id="todo-calendar" type="date" required>
                 </div>
                 <div class="flex-1">
                     <label for="todo-input">Gebe einen neuen Eintrag ein:</label>
@@ -36,7 +36,7 @@
             return {
                 todoHeadline: "Simple Todo App",
                 newTodo: {
-                    todoText: "",
+                    text: "",
                     priority: "",
                     date: ""
                 },
@@ -56,7 +56,7 @@
                     this.todoMessage = ""
                 }, 5000);
 
-                this.newTodo = { };
+                this.newTodo = {};
             }
         }
     }
@@ -70,6 +70,7 @@
             p {
                 color: $success;
                 font-size: 21px;
+                margin-bottom: 0;
             }
         }
 
@@ -111,6 +112,10 @@
 
             label[for="todo-input"] {
                 flex: 1 1 100%;
+            }
+
+            select {
+                cursor: pointer;
             }
 
             select,
