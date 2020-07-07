@@ -44,8 +44,8 @@
             }
         },
         mounted() {
-            this.$el.querySelector("#todo-form-wrap .addTodoForm input#todo-calendar").value = new Date().toISOString()
-                .substring(0, 10);
+            this.newTodo.date = new Date().toISOString().substring(0, 10);
+            this.newTodo.priority = "Normal";
         },
         methods: {
             emittingTodo() {
@@ -55,8 +55,6 @@
                 setTimeout(() => {
                     this.todoMessage = ""
                 }, 5000);
-
-                this.newTodo = {};
             }
         }
     }
@@ -75,32 +73,6 @@
         }
 
         form.addTodoForm {
-            .flex-wrap {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-
-                .flex-2 {
-                    width: 50%;
-                    flex: 1 1 50%;
-
-                    &:first-child {
-                        padding-right: 10px;
-                    }
-
-                    &:nth-child(2) {
-                        padding-left: 10px;
-                    }
-                }
-
-                .flex-1 {
-                    width: 100%;
-                    flex: 1 1 100%;
-                }
-            }
-
             label {
                 color: $primary-color;
                 font-size: 21px;

@@ -15,8 +15,21 @@
                 <template v-slot="{ item }">
                     <div class="card-content">
                         <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
-                            <input type="text" :value="item.text" placeholder="Bitte ausfüllen" readonly required>
-                            <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <div class="flex-wrap">
+                                <div class="flex-1 todo-details">
+                                    <select :value="item.priority" disabled required>
+                                        <option value="Hoch">Hoch</option>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Gering">Gering</option>
+                                    </select>
+                                    <input type="date" :value="item.date" disabled required>
+                                </div>
+                                <div class="flex-1 display-flex todo-text">
+                                    <input class="todoTextInput" type="text" :value="item.text"
+                                        placeholder="Bitte ausfüllen" disabled required>
+                                    <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </template>
@@ -45,8 +58,21 @@
                 <template v-slot="{ item }">
                     <div class="card-content">
                         <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
-                            <input type="text" :value="item.text" readonly>
-                            <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <div class="flex-wrap">
+                                <div class="flex-1 todo-details">
+                                    <select :value="item.priority" disabled required>
+                                        <option value="Hoch">Hoch</option>
+                                        <option value="Normal">Normal</option>
+                                        <option value="Gering">Gering</option>
+                                    </select>
+                                    <input type="date" :value="item.date" disabled required>
+                                </div>
+                                <div class="flex-1 display-flex todo-text">
+                                    <input class="todoTextInput" type="text" :value="item.text"
+                                        placeholder="Bitte ausfüllen" disabled required>
+                                    <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </template>
@@ -122,39 +148,53 @@
             clone(type) {
                 if (!type.state) {
                     this.todos.push({
-                        state: type.state,
-                        text: type.text,
-                        priority: type.priority,
-                        date: type.date
+                        ...type
                     });
                 } else {
                     this.dones.push({
-                        state: type.state,
-                        text: type.text,
-                        priority: type.priority,
-                        date: type.date
+                        ...type
                     });
                 }
 
                 this.updateStorage();
             },
             edit(e) {
-                let listItemInput = e.toElement.parentElement.parentElement.getElementsByTagName("input")[0];
+                let listItems = e.toElement.parentElement.parentElement.querySelectorAll(
+                    ".todo-list-item-form input, .todo-list-item-form select");
 
-                if (listItemInput.readOnly) {
-                    let input = listItemInput;
-                    input.readOnly = false;
-                    input.focus();
-                } else {
-                    let input = listItemInput;
-                    input.readOnly = true;
-                }
+                listItems.forEach(element => {
+                    if (element.disabled) {
+                        element.disabled = false;
+                        element.focus();
+                    } else {
+                        element.disabled = true;
+                    }
+                });
             },
             save(e, item) {
-                let listItemInput = e.target.querySelector("input");
+                let listItems = e.target.querySelectorAll("input, select");
 
-                item.text = listItemInput.value;
-                listItemInput.readOnly = true;
+                listItems.forEach((element, index) => {
+                    switch (index) {
+                        case 0:
+                            item.priority = element.value;
+                            break;
+                        case 1:
+                            item.date = element.value;
+                            break;
+                        case 2:
+                            item.text = element.value;
+
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    element.disabled = true;
+                });
+
+                this.updateStorage();
             },
             updateStorage() {
                 localStorage.setItem('simple-todos', JSON.stringify(this.todos));
@@ -207,21 +247,6 @@
                     color: $white;
                 }
 
-                input {
-                    &[readonly] {
-                        background: transparent;
-                        border: none;
-                        outline: none;
-
-                        ~button[type="submit"] {
-                            display: none;
-                            opacity: 0;
-                            visibility: hidden;
-                        }
-                    }
-                }
-
-
                 form.todo-list-item-form {
                     button {
                         i {
@@ -252,25 +277,17 @@
             .swipeout-content {
                 background: $gray;
 
-                input {
-                    &[readonly] {
-                        background: transparent;
-                        text-decoration: line-through;
-                        border: none;
-                        outline: none;
-                        color: $white;
-
-                        ~button[type="submit"] {
-                            display: none;
-                            opacity: 0;
-                            visibility: hidden;
-                        }
-                    }
-                }
-
                 form.todo-list-item-form {
                     button {
                         i {
+                            color: $white;
+                        }
+                    }
+
+                    input,
+                    select {
+                        &[disabled] {
+                            text-decoration: line-through;
                             color: $white;
                         }
                     }
@@ -307,7 +324,7 @@
                     flex: 1;
                     margin: 5px 0;
                     height: auto;
-                    min-height: 70px;
+                    min-height: 90px;
                     border-radius: 2px;
                     animation: rotateListItem 1s ease-in-out 1;
                 }
@@ -371,21 +388,33 @@
                             cursor: grabbing;
                         }
 
-                        input {
-                            font-size: 18px;
-                            color: $darkgray;
-
-                            &[readonly] {
-                                cursor: unset;
-                            }
-                        }
-
                         >div {
                             width: 100%;
                         }
 
                         form.todo-list-item-form {
-                            display: flex;
+                            input,
+                            select {
+                                min-height: 30px;
+                                margin: 2px 0;
+
+                                &[disabled] {
+                                    background: transparent;
+                                    border: none;
+                                    outline: none;
+                                    opacity: 1;
+                                    color: $darkgray;
+                                    cursor: unset;
+                                    pointer-events: none;
+                                    appearance: none;
+
+                                    ~button[type="submit"] {
+                                        display: none;
+                                        opacity: 0;
+                                        visibility: hidden;
+                                    }
+                                }
+                            }
 
                             button {
                                 font-size: 30px;
@@ -397,8 +426,22 @@
                                 width: 15%;
                             }
 
-                            input {
+                            input.todoTextInput {
                                 width: 85%;
+                            }
+
+                            .todo-details {
+                                input,
+                                select {
+                                    font-size: 12px;
+                                }
+                            }
+
+                            .todo-text {
+                                input,
+                                select {
+                                    font-size: 21px;
+                                }
                             }
                         }
                     }
