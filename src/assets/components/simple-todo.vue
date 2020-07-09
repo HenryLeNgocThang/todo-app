@@ -1,17 +1,24 @@
 <template>
     <div id="simple-todo-wrap">
-        <h3>Filtern nach:</h3>
-        <form>
-            <select v-on:change="sortArray($event)">
-                <option selected>Bitte wählen</option>
-                <option value="text">Alphabetisch</option>
-                <option value="date">Frist</option>
-                <option value="priority">Priorität</option>
-            </select>
+        <h3 class="todo-label">Filtern nach:</h3>
+        <form class="todo-filter-form" v-on:submit.prevent>
+            <div class="flex-wrap">
+                <div class="flex-2">
+                    <select class="todo-select todo-sort-type" v-on:change="sortArray($event)">
+                        <option selected disabled>Bitte wählen</option>
+                        <option value="text">Alphabetisch</option>
+                        <option value="date">Frist</option>
+                        <option value="priority">Priorität</option>
+                    </select>
+                </div>
+                <div class="flex-2">
+                    <button class="todo-order-button" v-on:click="revertOrder($event); sortArray($event)"></button>
+                </div>
+            </div>
         </form>
-        <h3>Todos:</h3>
+        <h3 class="todo-label">Todos:</h3>
         <div class="list" id="todos-list">
-            <swipe-list ref="list" class="card swipeout-non-selectable" :disabled="!enabled" :items="todos"
+            <swipe-list ref="list" class="card swipeout-non-selectable" v-bind:disabled="!enabled" v-bind:items="todos"
                 item-key="id" v-on:swipeout:click="itemClick">
                 <template v-slot:left="{ item, close, index }">
                     <div class="swipeout-action success" v-on:click="switchList(index, item)">
@@ -26,15 +33,15 @@
                         <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
                             <div class="flex-wrap">
                                 <div class="flex-1 todo-details">
-                                    <select :value="item.priority" disabled required>
-                                        <option value="Hoch">Hoch</option>
-                                        <option value="Normal">Normal</option>
-                                        <option value="Gering">Gering</option>
+                                    <select v-bind:value="item.priority" disabled required>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
                                     </select>
-                                    <input type="date" :value="item.date" disabled required>
+                                    <input type="date" v-bind:value="item.date" disabled required>
                                 </div>
                                 <div class="flex-1 display-flex todo-text">
-                                    <input class="todoTextInput" type="text" :value="item.text"
+                                    <input class="todoTextInput" type="text" v-bind:value="item.text"
                                         placeholder="Bitte ausfüllen" disabled required>
                                     <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                                 </div>
@@ -52,9 +59,9 @@
                 </template>
             </swipe-list>
         </div>
-        <h3>Dones:</h3>
+        <h3 class="todo-label">Dones:</h3>
         <div class="list" id="dones-list">
-            <swipe-list ref="list" class="card swipeout-non-selectable" :disabled="!enabled" :items="dones"
+            <swipe-list ref="list" class="card swipeout-non-selectable" v-bind:disabled="!enabled" v-bind:items="dones"
                 item-key="id" v-on:swipeout:click="itemClick">
                 <template v-slot:left="{ item, close, index }">
                     <div class="swipeout-action reopen" v-on:click="switchList(index, item)">
@@ -69,15 +76,15 @@
                         <form class="todo-list-item-form" v-on:submit.prevent="save($event, item)">
                             <div class="flex-wrap">
                                 <div class="flex-1 todo-details">
-                                    <select :value="item.priority" disabled required>
-                                        <option value="Hoch">Hoch</option>
-                                        <option value="Normal">Normal</option>
-                                        <option value="Gering">Gering</option>
+                                    <select v-bind:value="item.priority" disabled required>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
                                     </select>
-                                    <input type="date" :value="item.date" disabled required>
+                                    <input type="date" v-bind:value="item.date" disabled required>
                                 </div>
                                 <div class="flex-1 display-flex todo-text">
-                                    <input class="todoTextInput" type="text" :value="item.text"
+                                    <input class="todoTextInput" type="text" v-bind:value="item.text"
                                         placeholder="Bitte ausfüllen" disabled required>
                                     <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                                 </div>
@@ -118,6 +125,7 @@
         data() {
             return {
                 enabled: true,
+                orderDirection: 1,
                 todos: localStorage.getItem('simple-todos') != null ? [...JSON.parse(localStorage.getItem(
                     'simple-todos'))] : [],
                 dones: localStorage.getItem('simple-dones') != null ? [...JSON.parse(localStorage.getItem(
@@ -135,11 +143,26 @@
             },
         },
         methods: {
+            revertOrder(e) {
+                e.target.classList.toggle("todo-order-desc");
+                this.orderDirection *= -1;
+            },
             sortArray(e) {
-                function compare(a, b) {
-                    if (a.hasOwnProperty(e.srcElement.value) && b.hasOwnProperty(e.srcElement.value)) {
-                        const bandA = a[e.srcElement.value].toUpperCase();
-                        const bandB = b[e.srcElement.value].toUpperCase();
+                let sortEvent = e;
+
+                const compare = (a, b) => {
+                    let sortTypeSelect = null;
+
+                    sortEvent.path.forEach(element => {
+                        if (element instanceof HTMLFormElement && element.classList.contains(
+                                "todo-filter-form")) {
+                            sortTypeSelect = element.querySelector("select.todo-select");
+                        }
+                    });
+
+                    if (a.hasOwnProperty(sortTypeSelect.value) && b.hasOwnProperty(sortTypeSelect.value)) {
+                        const bandA = a[sortTypeSelect.value].toUpperCase();
+                        const bandB = b[sortTypeSelect.value].toUpperCase();
                         let comparison = 0;
 
                         if (bandA > bandB) {
@@ -148,7 +171,11 @@
                             comparison = -1;
                         }
 
-                        return comparison;
+                        if (this.orderDirection === -1) {
+                            return comparison * (-1)
+                        } else {
+                            return comparison
+                        }
                     } else {
                         return null;
                     }
@@ -215,9 +242,7 @@
                             break;
                         case 2:
                             item.text = element.value;
-
                             break;
-
                         default:
                             break;
                     }
@@ -254,6 +279,20 @@
     @import '~scss/style';
 
     #simple-todo-wrap {
+        .todo-order-button {
+            &:before {
+                content: "\f15d";
+                font-family: FontAwesome;
+                pointer-events: none;
+            }
+
+            &.todo-order-desc {
+                &:before {
+                    content: "\f15e";
+                }
+            }
+        }
+
         .list#todos-list {
             .swipeout-list-item {
                 background: $black;
@@ -429,6 +468,7 @@
                         }
 
                         form.todo-list-item-form {
+
                             input,
                             select {
                                 min-height: 30px;
@@ -467,6 +507,7 @@
                             }
 
                             .todo-details {
+
                                 input,
                                 select {
                                     font-size: 12px;
@@ -474,6 +515,7 @@
                             }
 
                             .todo-text {
+
                                 input,
                                 select {
                                     font-size: 21px;

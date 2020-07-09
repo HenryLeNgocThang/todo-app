@@ -4,21 +4,20 @@
         <form class="addTodoForm" v-on:submit.prevent="emittingTodo">
             <div class="flex-wrap">
                 <div class="flex-2">
-                    <label for="todo-priority">Priorität:</label>
-                    <select v-model="newTodo.priority" id="todo-priority" required>
-                        <option value="Hoch">Hoch</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Gering">Gering</option>
+                    <label class="todo-label" for="todo-priority">Priorität:</label>
+                    <select class="todo-select" v-model="newTodo.priority" id="todo-priority" required>
+                        <option v-for="(priority, index) in options.priorities" v-bind:key="index"
+                            v-bind:value="priority">{{priority}}</option>
                     </select>
                 </div>
                 <div class="flex-2">
-                    <label for="todo-calendar">Frist:</label>
-                    <input v-model="newTodo.date" id="todo-calendar" type="date" required>
+                    <label class="todo-label" for="todo-calendar">Frist:</label>
+                    <input class="todo-input" v-model="newTodo.date" id="todo-calendar" type="date" required>
                 </div>
                 <div class="flex-1">
-                    <label for="todo-input">Neuer Eintrag:</label>
+                    <label class="todo-label" for="todo-input">Neuer Eintrag:</label>
                     <div class="flex-wrap">
-                        <input v-model="newTodo.text" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
+                        <input class="todo-input" v-model="newTodo.text" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
                         <button type="submit"> Add</button>
                     </div>
                 </div>
@@ -40,21 +39,39 @@
                     priority: "",
                     date: ""
                 },
-                todoMessage: ""
+                todoMessage: "",
+                options: {
+                    priorities: {
+                        a: "High",
+                        b: "Medium",
+                        c: "Low"
+                    }
+                }
             }
         },
         mounted() {
+            const priorityArray = Object.keys(this.options.priorities);
+
             this.newTodo.date = new Date().toISOString().substring(0, 10);
-            this.newTodo.priority = "Normal";
+            this.newTodo.priority = this.options.priorities[priorityArray[Math.round(priorityArray.length / 2 - 1)]];
         },
         methods: {
             emittingTodo() {
+                const priorityArray = Object.keys(this.options.priorities);
+
                 this.$emit("inputData", this.newTodo);
                 this.todoMessage = "Neuer Eintrag wurde erfolgreich hinzugefügt."
 
                 setTimeout(() => {
                     this.todoMessage = ""
                 }, 5000);
+
+                this.newTodo = {};
+                this.newTodo.date = new Date().toISOString().substring(0, 10);
+                this.newTodo.priority = this.options.priorities[priorityArray[Math.round(priorityArray.length / 2 -
+                1)]];
+
+                this.newTodo.text = "";
             }
         }
     }
@@ -73,15 +90,6 @@
         }
 
         form.addTodoForm {
-            label {
-                color: $primary-color;
-                font-size: 21px;
-                font-weight: bold;
-                width: 100%;
-                display: block;
-                margin: 20px 0 5px;
-            }
-
             label[for="todo-input"] {
                 flex: 1 1 100%;
             }
@@ -90,22 +98,6 @@
                 cursor: pointer;
             }
 
-            select,
-            input {
-                display: block;
-                width: 100%;
-                color: $darkgray;
-                border: none;
-                outline: none;
-                padding: 15px;
-                font-size: 21px;
-                border-radius: 0px;
-                max-height: 54px;
-                background: $white;
-                box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-                border-top-left-radius: 2px;
-                border-bottom-left-radius: 2px;
-            }
 
             input#todo-input {
                 flex: 1 1 65%;

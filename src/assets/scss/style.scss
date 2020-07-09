@@ -68,3 +68,29 @@ body {
         flex: 1 1 100%;
     }
 }
+
+.todo-label {
+    color: $primary-color;
+    font-size: 21px;
+    font-weight: bold;
+    width: 100%;
+    display: block;
+    margin: 20px 0 5px;
+}
+
+.todo-select,
+.todo-input {
+    display: block;
+    width: 100%;
+    color: $darkgray;
+    border: none;
+    outline: none;
+    padding: 15px;
+    font-size: 21px;
+    border-radius: 0px;
+    max-height: 54px;
+    background: $white;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}

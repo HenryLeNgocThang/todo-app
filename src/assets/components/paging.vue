@@ -3,7 +3,7 @@
         <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 <li class="glide__slide">
-                    <simple-todo :addTodo="formData" />
+                    <simple-todo v-bind:addTodo="formData" />
                 </li>
                 <li class="glide__slide">
                     <todoForm v-on:inputData="updateTodo" />
