@@ -19,5 +19,6 @@
     ],
     "name": "Simple TODO",
     "short_name": "TODO",
-    "start_url": "../index.html"
+    "start_url": "../index.html",
+    "gcm_sender_id": "103953800507"
 }

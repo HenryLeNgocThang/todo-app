@@ -3,7 +3,7 @@
         <form class="todo-filter-form" v-on:submit.prevent>
             <div class="flex-wrap">
                 <div class="flex-1">
-                    <label class="todo-label" for="todo-sort-type">Filter by:</label>
+                    <label class="todo-label" for="todo-sort-type">Sort:</label>
                 </div>
                 <div class="flex-2 flex-padding-right">
                     <select class="todo-select" id="todo-sort-type" v-on:change="sortArray($event)">
