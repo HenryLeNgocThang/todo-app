@@ -21,12 +21,12 @@ module.exports = merge(common, {
       },
       {
         test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader', {
+        use: ['style-loader', 'css-loader', {
           loader: 'postcss-loader',
           options: {
             plugins: () => [autoprefixer()]
           }
-        }]
+        }, 'sass-loader']
       }
     ]
   }

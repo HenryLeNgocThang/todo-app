@@ -1,18 +1,20 @@
 <template>
     <div id="simple-todo-wrap">
-        <h3 class="todo-label">Filtern nach:</h3>
         <form class="todo-filter-form" v-on:submit.prevent>
             <div class="flex-wrap">
-                <div class="flex-2">
-                    <select class="todo-select todo-sort-type" v-on:change="sortArray($event)">
-                        <option selected disabled>Bitte wählen</option>
-                        <option value="text">Alphabetisch</option>
-                        <option value="date">Frist</option>
-                        <option value="priority">Priorität</option>
+                <div class="flex-1">
+                    <label class="todo-label" for="todo-sort-type">Filter by:</label>
+                </div>
+                <div class="flex-2 flex-padding-right">
+                    <select class="todo-select" id="todo-sort-type" v-on:change="sortArray($event)">
+                        <option selected disabled>Please choose</option>
+                        <option value="text">Alphabetical</option>
+                        <option value="date">Deadline</option>
+                        <option value="priority">Priority</option>
                     </select>
                 </div>
-                <div class="flex-2">
-                    <button class="todo-order-button" v-on:click="revertOrder($event); sortArray($event)"></button>
+                <div class="flex-2 flex-padding-left">
+                    <button class="todo-order-button todo-button" v-on:click="revertOrder($event); sortArray($event)"> order</button>
                 </div>
             </div>
         </form>
@@ -42,7 +44,7 @@
                                 </div>
                                 <div class="flex-1 display-flex todo-text">
                                     <input class="todoTextInput" type="text" v-bind:value="item.text"
-                                        placeholder="Bitte ausfüllen" disabled required>
+                                        placeholder="Please enter entry" disabled required>
                                     <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
@@ -85,7 +87,7 @@
                                 </div>
                                 <div class="flex-1 display-flex todo-text">
                                     <input class="todoTextInput" type="text" v-bind:value="item.text"
-                                        placeholder="Bitte ausfüllen" disabled required>
+                                        placeholder="Please enter entry" disabled required>
                                     <button type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
                                 </div>
                             </div>
@@ -274,277 +276,3 @@
         },
     }
 </script>
-
-<style lang="scss">
-    @import '~scss/style';
-
-    #simple-todo-wrap {
-        .todo-order-button {
-            &:before {
-                content: "\f15d";
-                font-family: FontAwesome;
-                pointer-events: none;
-            }
-
-            &.todo-order-desc {
-                &:before {
-                    content: "\f15e";
-                }
-            }
-        }
-
-        .list#todos-list {
-            .swipeout-list-item {
-                background: $black;
-
-                .swipeout-left {
-                    .success {
-                        background-color: $success;
-                    }
-                }
-
-                .swipeout-right {
-                    .edit {
-                        background-color: $black;
-                    }
-                }
-            }
-
-            .swipeout-content {
-                background: $goldenlineargradient;
-
-                i {
-                    color: $white;
-                }
-
-                form.todo-list-item-form {
-                    button {
-                        i {
-                            color: $darkgray;
-                        }
-                    }
-                }
-            }
-        }
-
-        .list#dones-list {
-            .swipeout-list-item {
-                background: $black;
-
-                .swipeout-left {
-                    .reopen {
-                        background: $success;
-                    }
-                }
-
-                .swipeout-right {
-                    .edit {
-                        background: $black;
-                    }
-                }
-            }
-
-            .swipeout-content {
-                background: $gray;
-
-                form.todo-list-item-form {
-                    button {
-                        i {
-                            color: $white;
-                        }
-                    }
-
-                    input,
-                    select {
-                        &[disabled] {
-                            color: $white;
-                        }
-                    }
-
-                    input[type="text"] {
-                        &[disabled] {
-                            text-decoration: line-through;
-                        }
-                    }
-                }
-            }
-        }
-
-        .list {
-            padding: 0;
-
-            .swipeout--no-transition {
-                .swipeout-content {
-                    transition: none !important;
-                }
-
-                .swipeout-action {
-                    transition: none !important;
-                }
-            }
-
-            .swipeout-non-selectable {
-                user-select: none !important;
-            }
-
-            .swipeout-no-pointer-events {
-                pointer-events: none !important;
-            }
-
-            .swipeout-list {
-                display: flex;
-                flex-direction: column;
-
-                .swipeout-list-item {
-                    flex: 1;
-                    margin: 5px 0;
-                    height: auto;
-                    min-height: 90px;
-                    border-radius: 2px;
-                    animation: rotateListItem 1s ease-in-out 1;
-                }
-
-                .swipeout {
-                    position: relative;
-                    overflow: hidden;
-                    display: flex;
-
-                    i {
-                        color: $white;
-                        pointer-events: none;
-                    }
-
-                    .swipeout-left {
-                        left: 0;
-                        transform: translateX(-100%);
-                    }
-
-                    .swipeout-right {
-                        right: 0;
-                        transform: translateX(100%);
-                    }
-
-                    .swipeout-left,
-                    .swipeout-right {
-                        position: absolute;
-                        height: 100%;
-                        display: flex;
-                        z-index: 1;
-
-                        .swipeout-action {
-                            transition: transform .2s;
-                            will-change: transform;
-                            width: 70px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            cursor: pointer;
-
-                            i {
-                                font-size: 30px;
-                            }
-
-                            &.delete {
-                                background-color: $alert;
-                            }
-                        }
-                    }
-
-                    .swipeout-content {
-                        transition: transform .2s;
-                        will-change: transform;
-                        width: 100%;
-                        display: flex;
-                        align-items: center;
-                        padding-left: 20px;
-                        cursor: grab;
-
-                        &:active {
-                            cursor: grabbing;
-                        }
-
-                        >div {
-                            width: 100%;
-                        }
-
-                        form.todo-list-item-form {
-
-                            input,
-                            select {
-                                min-height: 30px;
-                                margin: 2px 0;
-
-                                &[disabled] {
-                                    background: transparent;
-                                    border: none;
-                                    outline: none;
-                                    opacity: 1;
-                                    color: $darkgray;
-                                    cursor: unset;
-                                    pointer-events: none;
-                                    appearance: none;
-
-                                    ~button[type="submit"] {
-                                        display: none;
-                                        opacity: 0;
-                                        visibility: hidden;
-                                    }
-                                }
-                            }
-
-                            button {
-                                font-size: 30px;
-                                padding: 0;
-                                margin: 0;
-                                background: transparent;
-                                border: none;
-                                outline: none;
-                                width: 15%;
-                            }
-
-                            input.todoTextInput {
-                                width: 85%;
-                            }
-
-                            .todo-details {
-
-                                input,
-                                select {
-                                    font-size: 12px;
-                                }
-                            }
-
-                            .todo-text {
-
-                                input,
-                                select {
-                                    font-size: 21px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @keyframes rotateListItem {
-        0% {
-            transform: rotateX(200deg);
-            opacity: 0;
-        }
-
-        50% {
-            transform: rotateX(30deg);
-        }
-
-        75% {
-            transform: rotateX(-30deg);
-            opacity: 1;
-        }
-
-        100% {
-            transform: rotateX(0deg);
-        }
-    }
-</style>

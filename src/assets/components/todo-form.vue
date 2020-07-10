@@ -3,22 +3,22 @@
         <h1>{{todoHeadline}}</h1>
         <form class="addTodoForm" v-on:submit.prevent="emittingTodo">
             <div class="flex-wrap">
-                <div class="flex-2">
-                    <label class="todo-label" for="todo-priority">Priorität:</label>
-                    <select class="todo-select" v-model="newTodo.priority" id="todo-priority" required>
+                <div class="flex-2 flex-padding-right">
+                    <label class="todo-label" for="todo-priority">Priority:</label>
+                    <select class="todo-select" v-model="newTodo.priority" id="todo-priority" name="todo-priority" required>
                         <option v-for="(priority, index) in options.priorities" v-bind:key="index"
                             v-bind:value="priority">{{priority}}</option>
                     </select>
                 </div>
-                <div class="flex-2">
-                    <label class="todo-label" for="todo-calendar">Frist:</label>
-                    <input class="todo-input" v-model="newTodo.date" id="todo-calendar" type="date" required>
+                <div class="flex-2 flex-padding-left">
+                    <label class="todo-label" for="todo-calendar">Deadline:</label>
+                    <input class="todo-input" v-model="newTodo.date" id="todo-calendar" name="todo-calendar" type="date" required>
                 </div>
                 <div class="flex-1">
-                    <label class="todo-label" for="todo-input">Neuer Eintrag:</label>
+                    <label class="todo-label" for="todo-input">New entry:</label>
                     <div class="flex-wrap">
-                        <input class="todo-input" v-model="newTodo.text" type="text" id="todo-input" placeholder="Neuer Eintrag" required>
-                        <button type="submit"> Add</button>
+                        <input class="todo-input" v-model="newTodo.text" type="text" id="todo-input" name="todo-input" placeholder="Neuer Eintrag" required>
+                        <button class="todo-button" type="submit"> Add</button>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
     export default {
         data() {
             return {
-                todoHeadline: "Simple Todo App",
+                todoHeadline: "Simple todo app",
                 newTodo: {
                     text: "",
                     priority: "",
@@ -76,93 +76,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    @import '~scss/style';
-
-    #todo-form-wrap {
-        #todo-form-message {
-            p {
-                color: $success;
-                font-size: 21px;
-                margin-bottom: 0;
-            }
-        }
-
-        form.addTodoForm {
-            label[for="todo-input"] {
-                flex: 1 1 100%;
-            }
-
-            select {
-                cursor: pointer;
-            }
-
-
-            input#todo-input {
-                flex: 1 1 65%;
-
-                &:active,
-                &:focus {
-                    ~button {
-                        padding-left: 40px;
-
-                        &:before {
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-
-            button {
-                width: 100%;
-                flex: 1 1 25%;
-                text-transform: uppercase;
-                border: none;
-                outline: none;
-                transition: all .3s ease-in;
-                cursor: pointer;
-                color: $darkgray;
-                background: $goldenlineargradient;
-                box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
-                border-radius: 0px;
-                padding: 15px;
-                opacity: 1;
-                font-size: 21px;
-                font-weight: bold;
-                position: relative;
-                overflow: hidden;
-                border-top-right-radius: 2px;
-                border-bottom-right-radius: 2px;
-
-                &:before {
-                    position: absolute;
-                    top: 50%;
-                    transform: translate(-30px, -50%);
-                    font-family: FontAwesome;
-                    content: "\f067";
-                    font-size: 21px;
-                    opacity: 0;
-                    color: $darkgray;
-                    transition: .3s ease-in-out all;
-                }
-
-                &.focus,
-                &.active,
-                &:hover {
-                    border: none;
-                    padding-left: 40px;
-
-                    &:before {
-                        color: $black;
-                        opacity: 1;
-                    }
-                }
-
-                &:focus {
-                    outline: none;
-                }
-            }
-        }
-    }
-</style>

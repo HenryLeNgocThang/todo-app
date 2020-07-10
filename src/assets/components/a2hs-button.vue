@@ -1,5 +1,6 @@
 <template>
-    <button id="a2hs-button" v-on:click="openPrompt" v-if="display"><i class="fa fa-download" aria-hidden="true"></i> {{buttonText}}</button>
+    <button class="todo-button" id="a2hs-button" v-on:click="openPrompt" v-if="display"><i class="fa fa-download"
+            aria-hidden="true"></i> {{buttonText}}</button>
 </template>
 
 <script>
@@ -23,7 +24,7 @@
                         deferredPrompt = e;
                     });
                 } else {
-                  this.display = !this.display;
+                    this.display = !this.display;
                 }
             } else {
                 this.display = !this.display;
@@ -59,58 +60,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    @import '~scss/style';
-
-    #a2hs-button {
-        position: fixed;
-        top: 5%;
-        right: 5%;
-        z-index: 100;
-        display: block;
-        animation: a2hs 1s ease-in-out 1;
-        width: auto;
-        height: auto;
-        border: none;
-        outline: none;
-        transition: all .3s ease-in;
-        cursor: pointer;
-        background: $primary-color;
-        color: $darkgray;
-        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
-        border-radius: 2px;
-        padding: 10px;
-        opacity: 1;
-        font-size: 16px;
-        font-weight: bold;
-
-        &.focus,
-        &.active,
-        &:hover {
-            background: $primary-color-lighten;
-        }
-
-        &:focus {
-            outline: 0;
-        }
-    }
-
-    @keyframes a2hs {
-        0% {
-            right: -5%;
-        }
-
-        50% {
-            right: 6%;
-        }
-
-        75% {
-            right: 4%;
-        }
-
-        100% {
-            right: 5%;
-        }
-    }
-</style>

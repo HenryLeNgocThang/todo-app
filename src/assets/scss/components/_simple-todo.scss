@@ -1,0 +1,286 @@
+#simple-todo-wrap {
+    .todo-order-button {
+        padding: 11px;
+        font-size: 1.3rem;
+        border: 2px solid $primary-color;
+
+        &:before {
+            content: "\f15d";
+            font-family: FontAwesome;
+            pointer-events: none;
+        }
+
+        &:hover {
+            border: 2px solid $primary-color-lighten;
+        }
+
+        &.todo-order-desc {
+            color: $primary-color;
+            background: transparent;
+
+            &:hover {
+                color: $primary-color-lighten;
+                border: 2px solid $primary-color-lighten;
+            }
+
+            &:before {
+                content: "\f15e";
+            }
+        }
+    }
+
+    .list#todos-list {
+        .swipeout-list-item {
+            background: $black;
+
+            .swipeout-left {
+                .success {
+                    background-color: $success;
+                }
+            }
+
+            .swipeout-right {
+                .edit {
+                    background-color: $black;
+                }
+            }
+        }
+
+        .swipeout-content {
+            background: $goldenlineargradient;
+
+            i {
+                color: $white;
+            }
+
+            form.todo-list-item-form {
+                button {
+                    i {
+                        color: $darkgray;
+                    }
+                }
+            }
+        }
+    }
+
+    .list#dones-list {
+        .swipeout-list-item {
+            background: $black;
+
+            .swipeout-left {
+                .reopen {
+                    background: $success;
+                }
+            }
+
+            .swipeout-right {
+                .edit {
+                    background: $black;
+                }
+            }
+        }
+
+        .swipeout-content {
+            background: $gray;
+
+            form.todo-list-item-form {
+                button {
+                    i {
+                        color: $white;
+                    }
+                }
+
+                input,
+                select {
+                    &[disabled] {
+                        color: $white;
+                    }
+                }
+
+                input[type="text"].todoTextInput {
+                    &[disabled] {
+                        text-decoration: line-through;
+                    }
+                }
+            }
+        }
+    }
+
+    .list {
+        padding: 0;
+
+        .swipeout--no-transition {
+            .swipeout-content {
+                transition: none !important;
+            }
+
+            .swipeout-action {
+                transition: none !important;
+            }
+        }
+
+        .swipeout-non-selectable {
+            user-select: none !important;
+        }
+
+        .swipeout-no-pointer-events {
+            pointer-events: none !important;
+        }
+
+        .swipeout-list {
+            display: flex;
+            flex-direction: column;
+
+            .swipeout-list-item {
+                flex: 1;
+                margin: 5px 0;
+                height: auto;
+                min-height: 90px;
+                border-radius: 2px;
+                animation: rotateListItem 1s ease-in-out 1;
+            }
+
+            .swipeout {
+                position: relative;
+                overflow: hidden;
+                display: flex;
+
+                i {
+                    color: $white;
+                    pointer-events: none;
+                }
+
+                .swipeout-left {
+                    left: 0;
+                    transform: translateX(-100%);
+                }
+
+                .swipeout-right {
+                    right: 0;
+                    transform: translateX(100%);
+                }
+
+                .swipeout-left,
+                .swipeout-right {
+                    position: absolute;
+                    height: 100%;
+                    display: flex;
+                    z-index: 1;
+
+                    .swipeout-action {
+                        transition: transform .2s;
+                        will-change: transform;
+                        width: 70px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+
+                        i {
+                            font-size: 2rem;
+                        }
+
+                        &.delete {
+                            background-color: $alert;
+                        }
+                    }
+                }
+
+                .swipeout-content {
+                    transition: transform .2s;
+                    will-change: transform;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 20px;
+                    cursor: grab;
+
+                    &:active {
+                        cursor: grabbing;
+                    }
+
+                    >div {
+                        width: 100%;
+                    }
+
+                    form.todo-list-item-form {
+                        input,
+                        select {
+                            min-height: 30px;
+                            margin: 2px 0;
+
+                            &[disabled] {
+                                background: transparent;
+                                border: none;
+                                outline: none;
+                                opacity: 1;
+                                color: $darkgray;
+                                cursor: unset;
+                                pointer-events: none;
+                                appearance: none;
+
+                                ~button[type="submit"] {
+                                    display: none;
+                                    opacity: 0;
+                                    visibility: hidden;
+                                }
+                            }
+                        }
+
+                        button {
+                            font-size: 2rem;
+                            padding: 0;
+                            margin: 0;
+                            background: transparent;
+                            border: none;
+                            outline: none;
+                            width: 15%;
+                        }
+
+                        .todo-details {
+                            input,
+                            select {
+                                font-size: .85rem;
+                            }
+
+                            input[type="date"] {
+                                font-size: 13.6px;
+                            }
+                        }
+
+                        .todo-text {
+                            input.todoTextInput {
+                                font-size: 1.3rem;
+                                width: 85%;
+                                resize: none;
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                overflow: visible;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes rotateListItem {
+    0% {
+        transform: rotateX(200deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotateX(30deg);
+    }
+
+    75% {
+        transform: rotateX(-30deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotateX(0deg);
+    }
+}

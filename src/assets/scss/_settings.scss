@@ -1,0 +1,140 @@
+$primary-color: var(--todoPrimeColor);
+$primary-color-lighten: var(--todoPrimeColorLighten);
+$primary-color-darken: var(--todoPrimeColorDarken);
+$secondary-color: var(--todoSecondColor);
+$white: var(--todoWhite);
+$black: var(--todoBlack);
+$darkgray: var(--todoDarkGray);
+$gray: var(--todoGray);
+$success: var(--todoSuccess);
+$alert: var(--todoAlert);
+$goldenlineargradient: var(--todoGoldLinearGradient);
+
+$appMaxWidth: 480px;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    --todoPrimeColor: #D4AF37;
+    --todoPrimeColorLighten: #E0CA36;
+    --todoPrimeColorDarken: #544616;
+    --todoSecondColor: #60157e;
+    --todoWhite: #ffffff;
+    --todoBlack: #000000;
+    --todoDarkGray: #121212;
+    --todoGray: #333333;
+    --todoSuccess: #3adb76;
+    --todoAlert: #cc4b37;
+    --todoGoldLinearGradient: linear-gradient(145deg, #AE8625, #F7EF8A, #D2AC47, #EDC967);
+    margin: 0;
+    background-color: $darkgray;
+    font-size: 100%;
+}
+
+p,
+li,
+a,
+input,
+textarea,
+select,
+option,
+label,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+span {
+    font-family: 'Nunito', sans-serif;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.flex-wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .flex-2 {
+        width: 50%;
+        flex: 1 1 50%;
+
+        &.flex-padding-right {
+            padding-right: 10px;
+        }
+
+        &.flex-padding-left {
+            padding-left: 10px;
+        }
+    }
+
+    .flex-1 {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+}
+
+.todo-label {
+    color: $primary-color;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 100%;
+    display: block;
+    margin: 20px 0 5px;
+}
+
+.todo-select,
+.todo-input {
+    display: block;
+    width: 100%;
+    color: $darkgray;
+    border: 0;
+    outline: 0;
+    padding: 12px;
+    font-size: 1.3rem;
+    border-radius: 2px;
+    max-height: 54px;
+    background: $white;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.todo-button {
+    display: block;
+    width: auto;
+    height: auto;
+    border: 0;
+    outline: none;
+    transition: all .3s ease-in;
+    cursor: pointer;
+    background: $primary-color;
+    color: $darkgray;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 1rem;
+    opacity: 1;
+
+    &.focus,
+    &.active,
+    &:hover {
+        background: $primary-color-lighten;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}

@@ -1,0 +1,88 @@
+$navheight: 85px;
+
+#todo-main {
+    width: 100%;
+    max-width: $appMaxWidth;
+    margin: 0 auto;
+    padding-bottom: $navheight;
+    min-height: 100vh;
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        color: $primary-color;
+        font-size: 2.5rem;
+        margin-top: 20px;
+    }
+
+    h3 {
+        color: $primary-color;
+        font-size: 1.3rem;
+    }
+
+    #todo-form-wrap,
+    #simple-todo-wrap {
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .bullet-wrap {
+        width: 100%;
+        max-width: $appMaxWidth;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+
+        .glide__bullets {
+            display: flex;
+
+            button.glide__bullet {
+                display: block;
+                width: 100%;
+                flex: 1;
+                height: $navheight;
+                padding-bottom: calc(#{$navheight} / 4);
+                border-radius: 0;
+                outline: none;
+                border: none;
+                background: #121212de;
+                backdrop-filter: blur(15px);
+                font-size: 1.3rem;
+                position: relative;
+                color: $primary-color;
+                cursor: pointer;
+                transition: all .3s ease-in-out;
+
+                i {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    transition: all .3s .3s ease-in-out;
+                }
+
+                span {
+                    display: inline-block;
+                    margin-left: 5px;
+                    opacity: 0;
+                    transform: translate(35%, -50%);
+                    transition: all .3s ease-in-out;
+                }
+
+                &.glide__bullet--active {
+                    i {
+                        left: 35%;
+                        transition: all .3s ease-in-out;
+                    }
+
+                    span {
+                        opacity: 1;
+                        transform: translate(35%, -6%);
+                        transition: all .3s .3s ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}

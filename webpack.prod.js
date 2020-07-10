@@ -66,6 +66,12 @@ module.exports = merge(common, {
             }
           },
           {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer()]
+            }
+          },
+          {
             loader: 'sass-loader',
             options: {
               sourceMap: false,
@@ -74,12 +80,6 @@ module.exports = merge(common, {
               }
             }
           },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [autoprefixer()]
-            }
-          }
         ],
       }
     ]
