@@ -1,0 +1,49 @@
+.todo-sorter-form {
+    display: flex;
+    flex-wrap: wrap;
+
+    label {
+        flex-grow: 1;
+    }
+
+    select {
+        flex: 1;
+        padding-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        appearance: none;
+    }
+
+    .todo-order-button {
+        flex-shrink: 1;
+        padding: 11px;
+        font-size: 1.3rem;
+        border: 2px solid $primary-color;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    
+        &:before {
+            content: "\f15d";
+            font-family: FontAwesome;
+            pointer-events: none;
+        }
+    
+        &:hover {
+            border: 2px solid $primary-color-lighten;
+        }
+    
+        &.todo-order-desc {
+            color: $primary-color;
+            background: transparent;
+    
+            &:hover {
+                color: $primary-color-lighten;
+                border: 2px solid $primary-color-lighten;
+            }
+    
+            &:before {
+                content: "\f15e";
+            }
+        }
+    }
+}

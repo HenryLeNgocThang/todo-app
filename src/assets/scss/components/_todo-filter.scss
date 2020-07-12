@@ -1,0 +1,47 @@
+.todo-filter-form {
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .todo-filter-button,
+    .todo-filter-reset {
+        width: 100%;
+        padding: 11px;
+        font-size: 1.3rem;
+        position: relative;
+        border: 2px solid $primary-color;
+        margin-top: 20px;
+
+        &:hover {
+            border: 2px solid $primary-color-lighten;
+        }
+
+        &:before {
+            position: absolute;
+            font-family: FontAwesome;
+            pointer-events: none;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .todo-filter-button {
+        &:before {
+            content: "\f0b0";
+        }
+    }
+
+    .todo-filter-reset {
+        color: $primary-color;
+        background: transparent;
+
+        &:before {
+            content: "\f0e2";
+        }
+
+        &:hover {
+            color: $primary-color-lighten;
+        }
+    }
+}

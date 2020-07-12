@@ -1,11 +1,13 @@
 import Vue from 'vue';
-import Paging from '../components/paging.vue';
+import store from './store';
+import SimpleTodo from '../components/simple-todo.vue';
 import A2hs from '../components/a2hs-button.vue';
-import ServiceWorker from '../js/sw';
+import ServiceWorker from './sw';
 
-const pagingApp = new Vue({
-    render: (h) => h(Paging)
-}).$mount('paging');
+const simpleTodo = new Vue({
+    store,
+    render: (h) => h(SimpleTodo)
+}).$mount('simple-todo');
 
 const a2hsApp = new Vue({
     render: (h) => h(A2hs)

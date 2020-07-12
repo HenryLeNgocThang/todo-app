@@ -1,34 +1,57 @@
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./service-worker.js').then(registration => {
-            navigator.serviceWorker.ready.then(() => {
-                console.log('SW registered and activated: ', registration);
-                registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                });
-            })
+            console.log("SW registered: ", registration);
         }).catch(registrationError => {
             console.log('SW registration failed: ', registrationError);
         });
 
         navigator.serviceWorker.ready.then((serviceWorker) => {
-            let todos = localStorage.getItem('simple-todos') != null ? [...JSON.parse(localStorage.getItem(
-                'simple-todos'))] : [];
-            const dateToday = new Date().toISOString().substring(0, 10);
+            const pushManagerOptions = {
+                userVisibleOnly: true,
+            }
 
-            todos.forEach(todo => {
-                if (todo.date < dateToday) {
-                    console.log("past");
-                } else if (todo.date > dateToday) {
-                    console.log("future");
-                } else {
-                    serviceWorker.showNotification("Todo for today", {
-                        body: todo.priority + ": " + todo.text,
-                    })
+            serviceWorker.pushManager.permissionState(pushManagerOptions).then((PushMessagingState) => {
+                switch (PushMessagingState) {
+                    case "prompt":
+                        serviceWorker.pushManager.subscribe(pushManagerOptions);
+                        break;
+                    case "granted":
+                        displayNotification();
+                        break;
+                    default:
+                        console.log("Notification denied!");
+                        break;
+                }
+
+                function displayNotification() {
+                    const dateToday = new Date().toISOString().substring(0, 10);
+                    let todos = localStorage.getItem('simple-todos') != null ? [...JSON.parse(localStorage.getItem(
+                        'simple-todos'))] : [];
+                    let past = 0;
+                    let today = 0;
+
+                    for (let i = 0; i < todos.length; i++) {
+                        const todo = todos[i];
+
+                        if (todo.date < dateToday) {
+                            past++;
+                        } else if (todo.date == dateToday) {
+                            today++;
+                        }
+
+                        if (i == todos.length - 1) {
+                            serviceWorker.showNotification("Simple TODO App", {
+                                body: "Missed TODOs: " + past + ".\nTODOs today: " + today,
+                                icon: "/assets/img/logo.png",
+                                badge: "/assets/img/icons/logo-192x192.png",
+                            })
+                        }
+                    }
                 }
             });
         })
     });
 } else {
-    console.error('Push messaging is not supported!');
+    console.error('Service Worker or Push Manager is not supported!');
 };

@@ -57,7 +57,7 @@ module.exports = {
             swDest: './service-worker.js',
             clientsClaim: true,
             skipWaiting: true,
-            maximumFileSizeToCacheInBytes: 512000,
+            maximumFileSizeToCacheInBytes: development ? 4000000 : 512000,
         }),
     ],
     resolve: {
