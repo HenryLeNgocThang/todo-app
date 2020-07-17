@@ -25,7 +25,7 @@
                                 <span class="hidden">filter</span></button>
                         </div>
                         <div class="flex-2 flex-padding-left">
-                            <button class="todo-filter-reset todo-button" v-on:click="filterArray">
+                            <button class="todo-filter-reset todo-button" v-on:click="resetFilter">
                                 <span class="hidden">reset</span></button>
                         </div>
                     </div>
@@ -43,19 +43,22 @@
     export default {
         data() {
             return {
-                filter: []
+                allFieldsfilled: false
             }
         },
         methods: {
+            resetFilter() {
+                this.$store.state.todos = [...JSON.parse(localStorage.getItem('simple-todos'))];
+            },
             filterArray(e) {
                 let sortEvent = e;
 
-                const compare = (object) => {
+                this.resetFilter();
+
+                const compare = object => {
                     let filterForm;
                     let filterElements = [];
-                    this.filter = [];
-
-                    console.log(object);
+                    let returnVariable = [];
 
                     sortEvent.path.forEach(element => {
                         if (element instanceof HTMLFormElement && element.classList.contains(
@@ -67,17 +70,17 @@
                     filterElements = filterForm.querySelectorAll("select.todo-select, input.todo-input");
 
                     filterElements.forEach(element => {
-                        this.filter.push(element.value);
-
-                        if (object.hasOwnProperty(element.value)) {
-                            console.log(element.value);
-                            return true;
+                        if (Object.values(object).includes(element.value)) {
+                            returnVariable.push(true);
+                        } else {
+                            returnVariable.push(false);
                         }
                     });
+
+                    return returnVariable.indexOf(true) !== -1 ? true : false;
                 }
 
-                this.$store.state.todos.filter(compare);
-                this.$store.state.dones.filter(compare);
+                this.$store.state.todos = this.$store.state.todos.filter(compare);
             },
         },
     }
