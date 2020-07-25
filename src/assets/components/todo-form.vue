@@ -68,7 +68,7 @@
                 this.newTodo["status"] = false;
                 this.addTodo(this.newTodo);
                 this.updateStorage();
-                this.todoMessage = "Neuer Eintrag wurde erfolgreich hinzugefügt."
+                this.todoMessage = "New entry successfully added."
 
                 setTimeout(() => {
                     this.todoMessage = ""

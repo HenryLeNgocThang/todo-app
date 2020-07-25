@@ -3,8 +3,8 @@
         <div class="glide__track" data-glide-el="track">
             <ul class="glide__slides">
                 <li class="glide__slide">
-                    <todoFilter />
-                    <todoSorter />
+                    <!-- <todoFilter /> -->
+                    <!-- <todoSorter /> -->
                     <todo-list />
                 </li>
                 <li class="glide__slide">
@@ -22,9 +22,6 @@
                 </button>
                 <button name="glide-kalender" class="glide__bullet glide-kalender" data-glide-dir="=1">
                     <i class="fa fa-plus-square" aria-hidden="true"></i><span>New</span>
-                </button>
-                <button name="glide-settings" class="glide__bullet glide-settings" data-glide-dir="=2">
-                    <i class="fa fa-cog" aria-hidden="true"></i><span>Edit</span>
                 </button>
             </div>
         </div>

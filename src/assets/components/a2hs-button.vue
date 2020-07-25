@@ -14,7 +14,7 @@
                 buttonText: "Install App now!"
             }
         },
-        created: function () {
+        mounted: function () {
             if (!cookieHelper.getCookie("promptA2HS")) {
                 cookieHelper.setCookie("promptA2HS", true, 1);
 
@@ -22,6 +22,7 @@
                     window.addEventListener('beforeinstallprompt', (e) => {
                         e.preventDefault();
                         deferredPrompt = e;
+                        console.log(deferredPrompt);
                     });
                 } else {
                     this.display = !this.display;
@@ -33,7 +34,7 @@
         methods: {
             openPrompt: function () {
                 this.display = !this.display;
-
+                
                 // Show the prompt, catch the error and log results instead
                 deferredPrompt.prompt()
                     .then(res => console.log('User has ' + res.outcome + ' the prompt.'))
