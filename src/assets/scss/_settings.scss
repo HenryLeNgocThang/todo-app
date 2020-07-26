@@ -53,6 +53,10 @@ span {
     font-family: 'Nunito', sans-serif;
 }
 
+input, select, option {
+    appearance: none;
+}
+
 .display-flex {
     display: flex;
 }
