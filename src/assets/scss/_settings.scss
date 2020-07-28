@@ -53,8 +53,19 @@ span {
     font-family: 'Nunito', sans-serif;
 }
 
-input, select, option {
+input,
+select,
+option {
     appearance: none;
+}
+
+select {
+    background: $white;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 50%;
+    padding-right: 1.5rem;
 }
 
 .display-flex {
@@ -80,11 +91,11 @@ input, select, option {
         &.flex-padding-left {
             padding-left: 10px;
         }
-        
+
         &.flex-padding-bottom {
             padding-bottom: 10px;
         }
-        
+
         &.flex-padding-top {
             padding-top: 10px;
         }
@@ -116,7 +127,7 @@ input, select, option {
     font-size: 1.3rem;
     border-radius: 2px;
     max-height: 54px;
-    background: $white;
+    background-color: $white;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;

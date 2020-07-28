@@ -22,7 +22,6 @@
                     window.addEventListener('beforeinstallprompt', (e) => {
                         e.preventDefault();
                         deferredPrompt = e;
-                        console.log(deferredPrompt);
                     });
                 } else {
                     this.display = !this.display;
@@ -34,7 +33,7 @@
         methods: {
             openPrompt: function () {
                 this.display = !this.display;
-                
+
                 // Show the prompt, catch the error and log results instead
                 deferredPrompt.prompt()
                     .then(res => console.log('User has ' + res.outcome + ' the prompt.'))
